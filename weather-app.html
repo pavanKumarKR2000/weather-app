@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="//db.onlinewebfonts.com/c/8be4a2f403c2dc27187d892cca388e24?family=Britannic+Bold" rel="stylesheet" type="text/css"/>
+  <title>Document</title>
+</head>
+<body>
+       <div class="container">
+
+           <div class="input">
+                <input type="text" placeholder="ENTER THE CITY" class="city-name">
+                <button class="btn">SEARCH</button>
+           </div>
+
+           <div class="display">
+
+                  <div class="photo">
+                          <div class="whether-photo"></div>
+                          <div>
+                            <p class="temp">TEMP ___</p>
+                            <p class="sunRise">SUNRISE ___</p>
+                            <p class="sunSet">SUNSET ___</p>
+                          </div>
+                  </div>
+
+                  <div class="info">
+                         
+                          <p class="wind">WIND DIR ___</p>
+                          <p class="time-zone">TIMEZONE ___</p>
+                  </div>
+           </div>
+
+       </div>
+
+
+       <div class="heading">
+             <div></div>
+            <h1>WEATHER DATA</h1>
+       </div>
+
+            
+</body>
+<style>
+
+  *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family:britannic;
+    font-size: 24px;
+  }
+
+  body {
+      height: 100vh;
+      width: 100vw;
+      /* background: linear-gradient(to right, #9cecfb, #65c7f7, #0052d4); */
+      background: linear-gradient(to left, #3494e6, #ec6ead);
+  }
+
+  .heading{
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%,-50%);
+    height: 116px;
+    width: 350px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    outline: 1px solid black;
+    outline-offset: 5px;
+    background: linear-gradient(to right, #3494e6, #ec6ead);
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.49);
+  }
+
+  .heading div{
+       background:url("images\\icon.png");
+       background-size: contain;
+       background-repeat: no-repeat;
+       margin: 5px 5px;
+       border-right: 1px solid black;
+  }
+
+  .heading h1{
+       padding: 40px 10px;
+       text-align: center;
+       font-size: 30px;
+  }
+
+
+  .container{
+    position:absolute;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%,-50%);
+    height: 500px;
+    width: 600px;
+    display: grid;
+    grid-template-rows: 1fr 9fr;
+    padding: 20px 20px;
+    grid-gap: 10px;
+    outline: 1px solid black;
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.49);
+  }
+
+  .input{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.49);
+  }
+  .input input,button {
+    height:100%;
+    text-align: center;
+  }
+
+  .input input:focus{
+    outline: none;
+  }
+
+  .input button {
+    /* background: linear-gradient(to right, #3494e6, #ec6ead); */
+    background-color: #0f88f1;
+    border: none;
+  }
+
+  .input button:hover{
+    cursor: pointer;
+  }
+  
+  .input input::placeholder{
+    text-align: center;
+  }
+
+  .display{
+    background: linear-gradient(to right, #3494e6, #ec6ead);
+    display: grid;
+    grid-template-rows: 3fr 1fr;
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.49);
+  }
+
+  .photo{
+    padding:10px 10px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+  }
+  .whether-photo{
+    background: url("images\\thermometer.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: 35px 35px;
+    margin-left: 30px;
+    /* background-color: red; */
+  }
+
+  .photo div:nth-child(2){
+    display: grid;
+    grid-template-rows: repeat(3,1fr);
+    grid-gap: 10px;
+  }
+
+  .photo div:nth-child(2) p{
+    text-align: center;
+    padding-top: 30px;
+    font-size: 22px;
+    outline: 1px solid black;
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.49);
+  }
+
+  
+  .info{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    padding:0px 10px 10px ;
+  }
+
+  .info p{
+    padding-top: 30px;
+    text-align: center;
+    font-size: 22px;
+    outline: 1px solid black;
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.49);
+  }
+
+  .info p:nth-child(1){
+    margin-right: 10px;
+  }
+
+  p:hover{
+    transform: scale(0.99);
+    cursor: pointer;
+  }
+
+  
+
+           
+</style>
+<script>
+       
+       var city,url;
+
+  document.querySelector(".btn").addEventListener('click',()=>{
+     city=document.querySelector(".city-name").value;
+
+     const getInfo=(city)=>{
+       url=`https://api.weatherbit.io/v2.0/current?city=${city}&key=d682078d7d704b6b860413fc9d0639f4&include=minutely`;
+       
+       var xhr = new XMLHttpRequest();
+       xhr.open("GET", url);
+
+      xhr.onreadystatechange = ()=> {
+        if (xhr.readyState=== 4) {
+      
+                a=JSON.parse(xhr.responseText);
+                console.log(a);
+                document.querySelector(".temp").innerHTML=`TEMP: ${a["data"][0].temp} DEGREES`;
+                document.querySelector(".sunRise").innerHTML=`SUNRISE: ${a["data"][0].sunrise}`;
+                document.querySelector(".sunSet").innerHTML=`SUNSET: ${a["data"][0].sunset}`;
+                document.querySelector(".wind").innerHTML=`WIND DIR: ${a["data"][0].wind_dir}`;
+                document.querySelector(".time-zone").innerHTML=`TIMEZONE: ${a["data"][0].timezone}`;
+       }
+      
+      };
+
+     xhr.send();
+
+      
+  }
+
+  getInfo(city);
+  });    
+</script>
+</html>
